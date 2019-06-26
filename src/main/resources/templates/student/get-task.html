@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Get task</title>
+    <div th:replace="fragments/header :: header-head"></div>
+    <div th:replace="fragments/footer :: footer-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="float-left">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Task</h5>
+
+                <h6><span class="text-success" th:utext="${mes}"></span></h6>
+
+                <div class="form-group">
+                    <label for="titleId" class="font-weight-bold">Title:</label>
+                    <span id="titleId" class="form-control-static" th:text="${task.title}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionId" class="font-weight-bold">Description:</label>
+                    <span id="descriptionId" class="form-control-static" th:text="${task.description}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="priceId" class="font-weight-bold">Price:</label>
+                    <span id="priceId" class="form-control-static" th:text="${task.price}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryId" class="font-weight-bold">Category:</label>
+                    <span id="categoryId" class="form-control-static" th:text="${task.category}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateTimeId" class="font-weight-bold">Date Time:</label>
+                    <span id="dateTimeId" class="form-control-static" th:text="${#temporals.format(task.dateTime, 'dd-MM-yyyy HH:mm')}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="font-weight-bold">Offer</label>
+                    <a th:href="@{/student/home/{id}/order(id=${task.id})}">Check all offers</a>
+                </div>
+
+                <div class="form-group">
+                    <h5 class="card-title">Send Message</h5>
+                    <form th:action="@{/student/home/{id}/create(id=${task.id})}" th:object="${message}"
+                          method="post">
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('text')}"
+                                   th:errors="*{text}"></label>
+                            <input class="form-control" type="text" th:field="*{text}"
+                                   placeholder="Enter Text" required/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Send message</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <a th:href="@{/student/home/}">Back To Task List</a>
+    </div>
+
+    <div class="float-right">
+        <div class="form-group">
+
+            <div class="row" th:if="*{!messages.isEmpty()}">
+                <div class="col-md-15">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Message</th>
+                            <th>Date Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="row : *{messages}">
+                            <td th:text="${row.sender.email}"></td>
+                            <td th:text="${row.text}"></td>
+                            <td th:text="${#temporals.format(row.dateTime, 'dd-MM-yyyy HH:mm')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:fragment="header-head">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stepnin K.V">
+        <meta name="description" content="Coursework">
+        <title>Coursework</title>
+        <link th:rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    </div>
+</head>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img th:src="@{/images/logo.jpg}" width="150" height="150" alt="Logo"/>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav mr-auto">
+            <div class="nav-item active" sec:authorize="hasAuthority('STUDENT')">
+                <a class="nav-item nav-link active" href="/student/home">Home</a>
+            </div>
+            <div class="nav-item active" sec:authorize="hasAuthority('TEACHER')">
+                <a class="nav-item nav-link active" href="/teacher/home">Home</a>
+            </div>
+            <div class="nav-item active" sec:authorize="isAuthenticated()">
+                <a class="nav-item nav-link active" href="/books/home">Books</a>
+            </div>
+        </div>
+        <div class="navbar-nav">
+            <div class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link" href="/login">Login</a>
+            </div>
+            <div class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link" href="/registration">Registration</a>
+            </div>
+            <div class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

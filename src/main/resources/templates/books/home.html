@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books</title>
+    <div th:replace="fragments/header :: header-head"></div>
+    <div th:replace="fragments/footer :: footer-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <strong><a class="nav-link" href="/books/upload">Upload file?</a></strong>
+
+    <div class="alert alert-success" role="alert" th:if="*{bookList.isEmpty()}">
+        <strong>There is no books</strong>
+    </div>
+
+    <div class="row" th:if="*{!bookList.isEmpty()}">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Sender</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : *{bookList}">
+                    <td th:text="${row.id}"></td>
+                    <td th:text="${row.title}"></td>
+                    <td th:text="${row.author}"></td>
+                    <td th:text="${row.user.getFirstName() + ' ' + row.getUser().getLastName()}"></td>
+                    <td><a th:href="@{/books/download/{id}(id=${row.getId()})}">Download</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

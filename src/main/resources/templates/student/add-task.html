@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add task</title>
+    <div th:replace="fragments/header :: header-head"></div>
+    <div th:replace="fragments/footer :: footer-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:40vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add Task</h5>
+
+                    <form th:action="@{/student/create}" th:object="${task}" method="post">
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('title')}"
+                                   th:errors="*{title}"></label>
+                            <input class="form-control" type="text" th:field="*{title}"
+                                   placeholder="Enter Title"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('description')}"
+                                   th:errors="*{description}"></label>
+                            <input class="form-control" type="text" th:field="*{description}"
+                                   placeholder="Enter Description"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('price')}"
+                                   th:errors="*{price}"></label>
+                            <input class="form-control" type="text" th:field="*{price}"
+                                   placeholder="Enter Price"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('category')}"
+                                   th:errors="*{category}"></label>
+                            <select class="form-control-static" th:field="*{category}" title="Categories">
+                                <option th:each="selectedCategory : ${allCategories}"
+                                        th:value="${selectedCategory}"
+                                        th:text="${selectedCategory}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Create task</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student</title>
+    <div th:replace="fragments/header :: header-head"></div>
+    <div th:replace="fragments/footer :: footer-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+
+    <h6><span class="text-success" th:utext="${message}"></span></h6>
+
+    <strong><a class="nav-link" href="/student/add">Create task?</a></strong>
+
+    <div class="alert alert-success" role="alert" th:if="*{taskList.isEmpty()}">
+        <strong>You don't have task</strong>
+    </div>
+
+    <div class="row" th:if="*{!taskList.isEmpty()}">
+        <div class="col-md-15">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Date Time</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : *{taskList}">
+                    <td th:text="${row.id}"></td>
+                    <td th:text="${row.title}"></td>
+                    <td th:text="${row.description}"></td>
+                    <td th:text="${row.price}"></td>
+                    <td th:text="${row.category}"></td>
+                    <td th:text="${#temporals.format(row.dateTime, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td><a th:href="@{/student/home/{id}(id=${row.getId()})}">View</a></td>
+                    <td><a th:href="@{/student/edit/{id}(id=${row.getId()})}">Edit</a></td>
+                    <td><a th:href="@{/student/delete/{id}(id=${row.getId()})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

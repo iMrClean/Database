@@ -1,0 +1,21 @@
+spring:
+    datasource:
+        initialization-mode: always
+        password: 2468
+        url: jdbc:postgresql://localhost:5432/coursework
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                jdbc.lob.non_contextual_creation: true
+        show-sql: true
+    queries:
+        roles-query: select email, role from users where email=?
+        users-query: select email, password, active from users where email=?
+    servlet:
+      multipart:
+        max-file-size: 10MB
+        max-request-size: 10MB

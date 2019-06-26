@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload</title>
+    <div th:replace="fragments/header :: header-head"></div>
+    <div th:replace="fragments/footer :: footer-head"></div>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:40vh">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upload book</h5>
+
+                    <form th:action="@{/books/upload}" th:object="${book}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('title')}"
+                                   th:errors="*{title}"></label>
+                            <input class="form-control" type="text" th:field="*{title}"
+                                   placeholder="Enter Title"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="validation-message" th:if="${#fields.hasErrors('author')}"
+                                   th:errors="*{author}"></label>
+                            <input class="form-control" type="text" th:field="*{author}"
+                                   placeholder="Enter Author"/>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <p type="file">Select a file to upload</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="file" accept="application/pdf" required/>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Upload file</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
